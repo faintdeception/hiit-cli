@@ -134,13 +134,13 @@ namespace hitt_cli
                     .AddChoices(new[]
                     {
                         $"{DisplayService.Runner} Start Current Workout",
-                        $"📅 View Today's Schedule",
-                        $"⏰ Show Next Workout",
-                        $"📝 List Available Content",
-                        $"{DisplayService.Target} Run Specific Routine",
-                        $"👀 Preview Routine",
-                        $"❓ Help",
-                        $"🚪 Exit"
+                        $"{DisplayService.Calendar} View Today's Schedule",
+                        $"{DisplayService.Clock} Show Next Workout",
+                        $"{DisplayService.Document} List Available Content",
+                        $"{DisplayService.Fire} Run Specific Routine",
+                        $"{DisplayService.Eyes} Preview Routine",
+                        $"{DisplayService.Question} Help",
+                        $"{DisplayService.Door} Exit"
                     }));
 
             switch (choice)
@@ -148,25 +148,25 @@ namespace hitt_cli
                 case var c when c.Contains("Start Current Workout"):
                     await StartCurrentWorkout();
                     break;
-                case "📅 View Today's Schedule":
+                case var c when c.Contains("View Today's Schedule"):
                     await ShowTodaysWorkouts();
                     break;
-                case "⏰ Show Next Workout":
+                case var c when c.Contains("Show Next Workout"):
                     await ShowNextWorkout();
                     break;
-                case "📝 List Available Content":
+                case var c when c.Contains("List Available Content"):
                     ShowAvailableContent();
                     break;
                 case var c when c.Contains("Run Specific Routine"):
                     await InteractiveRunRoutine();
                     break;
-                case "👀 Preview Routine":
+                case var c when c.Contains("Preview Routine"):
                     await InteractivePreviewRoutine();
                     break;
-                case "❓ Help":
+                case var c when c.Contains("Help"):
                     ShowHelp();
                     break;
-                case "🚪 Exit":
+                case var c when c.Contains("Exit"):
                     return;
             }
         }

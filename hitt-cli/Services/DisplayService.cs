@@ -48,71 +48,101 @@ namespace hitt_cli.Services
         /// <summary>
         /// Gets an appropriate symbol for fire/intensity
         /// </summary>
-        public static string Fire => SupportsEmojis ? "🔥" : "*";
+        public static string Fire => SupportsEmojis ? "\U0001F525" : "*";
 
         /// <summary>
         /// Gets an appropriate symbol for lightning/energy
         /// </summary>
-        public static string Lightning => SupportsEmojis ? "⚡" : "!";
+        public static string Lightning => SupportsEmojis ? "\u26A1" : "!";
 
         /// <summary>
         /// Gets an appropriate symbol for muscle/strength
         /// </summary>
-        public static string Muscle => SupportsEmojis ? "💪" : "+";
+        public static string Muscle => SupportsEmojis ? "\U0001F4AA" : "+";
 
         /// <summary>
         /// Gets an appropriate symbol for target/goal
         /// </summary>
-        public static string Target => SupportsEmojis ? "🎯" : ">";
+        public static string Target => SupportsEmojis ? "\U0001F3AF" : ">";
 
         /// <summary>
         /// Gets an appropriate symbol for rocket/speed
         /// </summary>
-        public static string Rocket => SupportsEmojis ? "🚀" : "^";
+        public static string Rocket => SupportsEmojis ? "\U0001F680" : "^";
 
         /// <summary>
         /// Gets an appropriate symbol for star/excellence
         /// </summary>
-        public static string Star => SupportsEmojis ? "⭐" : "*";
+        public static string Star => SupportsEmojis ? "\u2B50" : "*";
 
         /// <summary>
         /// Gets an appropriate symbol for crown/achievement
         /// </summary>
-        public static string Crown => SupportsEmojis ? "👑" : "#";
+        public static string Crown => SupportsEmojis ? "\U0001F451" : "#";
 
         /// <summary>
         /// Gets an appropriate symbol for sword/warrior
         /// </summary>
-        public static string Sword => SupportsEmojis ? "⚔️" : "X";
+        public static string Sword => SupportsEmojis ? "\u2694\uFE0F" : "X";
 
         /// <summary>
         /// Gets an appropriate symbol for trophy/victory
         /// </summary>
-        public static string Trophy => SupportsEmojis ? "🏆" : "!";
+        public static string Trophy => SupportsEmojis ? "\U0001F3C6" : "!";
 
         /// <summary>
         /// Gets an appropriate symbol for runner/exercise
         /// </summary>
-        public static string Runner => SupportsEmojis ? "🏃‍♂️" : ">";
+        public static string Runner => SupportsEmojis ? "\U0001F3C3\u200D\u2642\uFE0F" : ">";
 
         /// <summary>
         /// Gets an appropriate symbol for explosion/power
         /// </summary>
-        public static string Explosion => SupportsEmojis ? "💥" : "*";
+        public static string Explosion => SupportsEmojis ? "\U0001F4A5" : "*";
 
         /// <summary>
         /// Gets an appropriate symbol for water/hydration
         /// </summary>
-        public static string Water => SupportsEmojis ? "💧" : "~";
+        public static string Water => SupportsEmojis ? "\U0001F4A7" : "~";
 
         /// <summary>
         /// Gets an appropriate symbol for meditation/stretching
         /// </summary>
-        public static string Meditation => SupportsEmojis ? "🧘‍♀️" : "-";
+        public static string Meditation => SupportsEmojis ? "\U0001F9D8\u200D\u2640\uFE0F" : "-";
 
         /// <summary>
         /// Gets an appropriate symbol for 100/perfection
         /// </summary>
-        public static string Hundred => SupportsEmojis ? "💯" : "!";
+        public static string Hundred => SupportsEmojis ? "\U0001F4AF" : "!";
+
+        /// <summary>
+        /// Gets an appropriate symbol for calendar/schedule
+        /// </summary>
+        public static string Calendar => SupportsEmojis ? "📅" : "@";
+
+        /// <summary>
+        /// Gets an appropriate symbol for clock/time
+        /// </summary>
+        public static string Clock => SupportsEmojis ? "⏰" : "T";
+
+        /// <summary>
+        /// Gets an appropriate symbol for document/list
+        /// </summary>
+        public static string Document => SupportsEmojis ? "📝" : "=";
+
+        /// <summary>
+        /// Gets an appropriate symbol for eyes/preview
+        /// </summary>
+        public static string Eyes => SupportsEmojis ? "👀" : "?";
+
+        /// <summary>
+        /// Gets an appropriate symbol for question/help
+        /// </summary>
+        public static string Question => SupportsEmojis ? "❓" : "?";
+
+        /// <summary>
+        /// Gets an appropriate symbol for door/exit
+        /// </summary>
+        public static string Door => SupportsEmojis ? "🚪" : "X";
     }
 }
