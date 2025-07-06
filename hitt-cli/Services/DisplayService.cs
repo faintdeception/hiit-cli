@@ -19,18 +19,30 @@ namespace hitt_cli.Services
                 if (_supportsEmojis.HasValue)
                     return _supportsEmojis.Value;
 
-                // Check if we're in a Windows environment that might have font issues
-                var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
-                var encoding = Console.OutputEncoding;
-                
-                // Basic heuristic: if we're on Windows and not using UTF-8, likely emoji issues
-                _supportsEmojis = !isWindows || encoding.Equals(Encoding.UTF8);
-                
-                // Allow override via environment variable
+                // Check environment variable first
                 var envOverride = Environment.GetEnvironmentVariable("HITT_CLI_EMOJIS");
                 if (!string.IsNullOrEmpty(envOverride))
                 {
                     _supportsEmojis = envOverride.ToLowerInvariant() == "true";
+                    return _supportsEmojis.Value;
+                }
+
+                // Enhanced detection
+                var isWindows = Environment.OSVersion.Platform == PlatformID.Win32NT;
+                
+                if (!isWindows)
+                {
+                    // Most Unix/Linux terminals support emojis
+                    _supportsEmojis = true;
+                }
+                else
+                {
+                    // Windows: check for UTF-8 or Windows Terminal
+                    var isWindowsTerminal = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("WT_SESSION"));
+                    var encoding = Console.OutputEncoding;
+                    var isUTF8 = encoding.CodePage == 65001; // UTF-8 code page
+                    
+                    _supportsEmojis = isWindowsTerminal || isUTF8;
                 }
                 
                 return _supportsEmojis.Value;
@@ -118,31 +130,31 @@ namespace hitt_cli.Services
         /// <summary>
         /// Gets an appropriate symbol for calendar/schedule
         /// </summary>
-        public static string Calendar => SupportsEmojis ? "📅" : "@";
+        public static string Calendar => SupportsEmojis ? "\U0001F4C5" : "@";
 
         /// <summary>
         /// Gets an appropriate symbol for clock/time
         /// </summary>
-        public static string Clock => SupportsEmojis ? "⏰" : "T";
+        public static string Clock => SupportsEmojis ? "\u23F0" : "T";
 
         /// <summary>
         /// Gets an appropriate symbol for document/list
         /// </summary>
-        public static string Document => SupportsEmojis ? "📝" : "=";
+        public static string Document => SupportsEmojis ? "\U0001F4DD" : "=";
 
         /// <summary>
         /// Gets an appropriate symbol for eyes/preview
         /// </summary>
-        public static string Eyes => SupportsEmojis ? "👀" : "?";
+        public static string Eyes => SupportsEmojis ? "\U0001F440" : "?";
 
         /// <summary>
         /// Gets an appropriate symbol for question/help
         /// </summary>
-        public static string Question => SupportsEmojis ? "❓" : "?";
+        public static string Question => SupportsEmojis ? "\u2753" : "?";
 
         /// <summary>
         /// Gets an appropriate symbol for door/exit
         /// </summary>
-        public static string Door => SupportsEmojis ? "🚪" : "X";
+        public static string Door => SupportsEmojis ? "\U0001F6AA" : "X";
     }
 }

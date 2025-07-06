@@ -13,6 +13,9 @@ namespace hitt_cli
         {
             try
             {
+                // Force UTF-8 output encoding for emoji support
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+                
                 // Check for emoji support flags
                 if (args.Contains("--no-emoji") || args.Contains("--text-only"))
                 {
