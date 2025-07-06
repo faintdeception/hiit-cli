@@ -13,6 +13,16 @@ namespace hitt_cli
         {
             try
             {
+                // Check for emoji support flags
+                if (args.Contains("--no-emoji") || args.Contains("--text-only"))
+                {
+                    DisplayService.SetEmojiSupport(false);
+                }
+                else if (args.Contains("--emoji"))
+                {
+                    DisplayService.SetEmojiSupport(true);
+                }
+
                 // Initialize services
                 InitializeServices();
 
@@ -20,7 +30,7 @@ namespace hitt_cli
                 DisplayWelcomeHeader();
 
                 // Handle command line arguments or show interactive menu
-                if (args.Length > 0)
+                if (args.Length > 0 && !args.All(a => a.StartsWith("--")))
                 {
                     await HandleCommandLineArgs(args);
                 }
@@ -67,7 +77,15 @@ namespace hitt_cli
 
         static async Task HandleCommandLineArgs(string[] args)
         {
-            var command = args[0].ToLowerInvariant();
+            // Filter out emoji flags
+            var filteredArgs = args.Where(a => !a.StartsWith("--")).ToArray();
+            if (filteredArgs.Length == 0)
+            {
+                await ShowInteractiveMenu();
+                return;
+            }
+
+            var command = filteredArgs[0].ToLowerInvariant();
 
             switch (command)
             {
@@ -85,14 +103,14 @@ namespace hitt_cli
                     ShowAvailableContent();
                     break;
                 case "run":
-                    if (args.Length > 1)
-                        await RunSpecificRoutine(args[1]);
+                    if (filteredArgs.Length > 1)
+                        await RunSpecificRoutine(filteredArgs[1]);
                     else
                         AnsiConsole.MarkupLine("[red]Please specify a routine name to run[/]");
                     break;
                 case "preview":
-                    if (args.Length > 1)
-                        await PreviewRoutine(args[1]);
+                    if (filteredArgs.Length > 1)
+                        await PreviewRoutine(filteredArgs[1]);
                     else
                         AnsiConsole.MarkupLine("[red]Please specify a routine name to preview[/]");
                     break;
@@ -115,19 +133,19 @@ namespace hitt_cli
                     .Title("[green]What would you like to do?[/]")
                     .AddChoices(new[]
                     {
-                        "🏃‍♂️ Start Current Workout",
-                        "📅 View Today's Schedule",
-                        "⏰ Show Next Workout",
-                        "📝 List Available Content",
-                        "🎯 Run Specific Routine",
-                        "👀 Preview Routine",
-                        "❓ Help",
-                        "🚪 Exit"
+                        $"{DisplayService.Runner} Start Current Workout",
+                        $"📅 View Today's Schedule",
+                        $"⏰ Show Next Workout",
+                        $"📝 List Available Content",
+                        $"{DisplayService.Target} Run Specific Routine",
+                        $"👀 Preview Routine",
+                        $"❓ Help",
+                        $"🚪 Exit"
                     }));
 
             switch (choice)
             {
-                case "🏃‍♂️ Start Current Workout":
+                case var c when c.Contains("Start Current Workout"):
                     await StartCurrentWorkout();
                     break;
                 case "📅 View Today's Schedule":
@@ -139,7 +157,7 @@ namespace hitt_cli
                 case "📝 List Available Content":
                     ShowAvailableContent();
                     break;
-                case "🎯 Run Specific Routine":
+                case var c when c.Contains("Run Specific Routine"):
                     await InteractiveRunRoutine();
                     break;
                 case "👀 Preview Routine":
@@ -338,6 +356,11 @@ namespace hitt_cli
             AnsiConsole.MarkupLine("  [green]hitt preview <routine>[/]  - Preview a routine without running");
             AnsiConsole.MarkupLine("  [green]hitt help[/]               - Show this help");
             AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine("[bold]Options:[/]");
+            AnsiConsole.MarkupLine("  [cyan]--emoji[/]                  - Force emoji display (default on Unix)");
+            AnsiConsole.MarkupLine("  [cyan]--no-emoji, --text-only[/]  - Use text symbols instead of emojis");
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine("[dim]Environment variable HITT_CLI_EMOJIS=true/false can also control emoji display.[/]");
             AnsiConsole.MarkupLine("[dim]Place your workout data files in a 'Data' directory with 'Routines' and 'Schedules' subdirectories.[/]");
         }
     }

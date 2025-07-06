@@ -35,7 +35,7 @@ namespace hitt_cli.Services
                 if (routine.Reps > 1)
                 {
                     AnsiConsole.WriteLine();
-                    AnsiConsole.Write(new Rule($"[bold cyan]🔥 REP {currentRep} of {routine.Reps} 🔥[/]").RuleStyle("cyan"));
+                    AnsiConsole.Write(new Rule($"[bold cyan]{DisplayService.Fire} REP {currentRep} of {routine.Reps} {DisplayService.Fire}[/]").RuleStyle("cyan"));
                     AnsiConsole.WriteLine();
                     
                     if (currentRep > 1)
@@ -178,7 +178,7 @@ namespace hitt_cli.Services
             {
                 if (isNoRestWorkout && (workoutNumber < totalWorkouts || currentRep < totalReps))
                 {
-                    AnsiConsole.MarkupLine($"[bold cyan]🔥 Exercise {workoutNumber} crushed! Moving to next...[/]");
+                    AnsiConsole.MarkupLine($"[bold cyan]{DisplayService.Fire} Exercise {workoutNumber} crushed! Moving to next...[/]");
                     await Task.Delay(1500, cancellationToken);
                 }
                 else if (workoutNumber < totalWorkouts || currentRep < totalReps)
@@ -228,7 +228,7 @@ namespace hitt_cli.Services
                         task.Value = seconds;
                         if (activity.StartsWith("GO!"))
                         {
-                            task.Description = $"[{color}]{activity}[/] - [bold green]DONE! 🔥[/]";
+                            task.Description = $"[{color}]{activity}[/] - [bold green]DONE! {DisplayService.Fire}[/]";
                         }
                         else
                         {
@@ -255,7 +255,7 @@ namespace hitt_cli.Services
                                            $"[blue]Difficulty:[/] {routine.Difficulty}/5{repsInfo}\n" +
                                            $"[blue]Tags:[/] {string.Join(", ", routine.Tags)}"))
             {
-                Header = new PanelHeader("[bold]🏃‍♂️ Workout Starting[/]"),
+                Header = new PanelHeader($"[bold]{DisplayService.Runner} Workout Starting[/]"),
                 Border = BoxBorder.Rounded,
                 BorderStyle = new Style(Color.Blue)
             };
@@ -294,18 +294,18 @@ namespace hitt_cli.Services
             
             var completionMessages = isNoRestRoutine ? new[]
             {
-                "INCREDIBLE! You just crushed a no-rest workout! 🔥💪",
-                "BEAST MODE ACTIVATED! That was pure intensity! ⚡💯", 
-                "UNSTOPPABLE! You powered through without stopping! 🚀💥",
-                "WARRIOR! That no-rest challenge was conquered! ⚔️🏆",
-                "LEGEND! You just proved your endurance is next level! 👑🔥"
+                $"INCREDIBLE! You just crushed a no-rest workout! {DisplayService.Fire}{DisplayService.Muscle}",
+                $"BEAST MODE ACTIVATED! That was pure intensity! {DisplayService.Lightning}{DisplayService.Hundred}", 
+                $"UNSTOPPABLE! You powered through without stopping! {DisplayService.Rocket}{DisplayService.Explosion}",
+                $"WARRIOR! That no-rest challenge was conquered! {DisplayService.Sword}{DisplayService.Trophy}",
+                $"LEGEND! You just proved your endurance is next level! {DisplayService.Crown}{DisplayService.Fire}"
             } : new[]
             {
-                "Great job! You've completed your workout! 💪",
-                "Excellent work! Your body will thank you later! 🔥",
-                "Fantastic effort! You're getting stronger every day! ⭐",
-                "Well done! Another step closer to your fitness goals! 🎯",
-                "Amazing work! You showed up and crushed it! 🚀"
+                $"Great job! You've completed your workout! {DisplayService.Muscle}",
+                $"Excellent work! Your body will thank you later! {DisplayService.Fire}",
+                $"Fantastic effort! You're getting stronger every day! {DisplayService.Star}",
+                $"Well done! Another step closer to your fitness goals! {DisplayService.Target}",
+                $"Amazing work! You showed up and crushed it! {DisplayService.Rocket}"
             };
 
             var random = new Random();
@@ -317,15 +317,16 @@ namespace hitt_cli.Services
             // Enhanced stats for no-rest workouts
             if (isNoRestRoutine)
             {
-                var totalExerciseTime = routine.Workouts.Sum(w => w.Sets * w.Length);
-                AnsiConsole.MarkupLine($"[bold yellow]🔥 INTENSITY STATS:[/]");
+                var totalExerciseTime = routine.Workouts.Sum(w => w.Sets * w.Length) * routine.Reps;
+                var totalSets = routine.Workouts.Sum(w => w.Sets) * routine.Reps;
+                AnsiConsole.MarkupLine($"[bold yellow]{DisplayService.Fire} INTENSITY STATS:[/]");
                 AnsiConsole.MarkupLine($"   • [green]Pure exercise time:[/] {totalExerciseTime / 60}m {totalExerciseTime % 60}s");
-                AnsiConsole.MarkupLine($"   • [red]Total exercises:[/] {routine.Workouts.Sum(w => w.Sets)} sets");
+                AnsiConsole.MarkupLine($"   • [red]Total exercises:[/] {totalSets} sets");
                 AnsiConsole.MarkupLine($"   • [blue]Zero rest breaks![/] Maximum intensity achieved!");
                 AnsiConsole.WriteLine();
             }
             
-            AnsiConsole.MarkupLine("[dim]Remember to stay hydrated and stretch! 💧🧘‍♀️[/]");
+            AnsiConsole.MarkupLine($"[dim]Remember to stay hydrated and stretch! {DisplayService.Water}{DisplayService.Meditation}[/]");
         }
 
         /// <summary>
