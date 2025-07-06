@@ -1,0 +1,17 @@
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\hitt-cli.exe
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\hitt-cli.deps.json
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\hitt-cli.runtimeconfig.json
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\hitt-cli.dll
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\hitt-cli.pdb
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\Spectre.Console.dll
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.csproj.AssemblyReference.cache
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.AssemblyInfoInputs.cache
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.AssemblyInfo.cs
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.csproj.CoreCompileInputs.cache
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.csproj.Up2Date
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.dll
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\refint\hitt-cli.dll
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.pdb
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\hitt-cli.genruntimeconfig.cache
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\obj\Release\net8.0\ref\hitt-cli.dll

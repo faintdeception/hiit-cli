@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "hitt-cli": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

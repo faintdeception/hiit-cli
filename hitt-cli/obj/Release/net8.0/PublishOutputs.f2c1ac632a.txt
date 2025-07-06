@@ -1,0 +1,6 @@
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\publish\hitt-cli.exe
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\publish\hitt-cli.dll
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\publish\hitt-cli.deps.json
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\publish\hitt-cli.runtimeconfig.json
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\publish\hitt-cli.pdb
+C:\Users\dbm82\Source\Repos\Freelance\DreampipeStudios\hitt-cli\hitt-cli\bin\Release\net8.0\publish\Spectre.Console.dll

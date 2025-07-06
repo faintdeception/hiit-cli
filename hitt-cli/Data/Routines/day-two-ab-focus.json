@@ -1,0 +1,51 @@
+{
+  "name": "Day Two Ab Hitt",
+  "description": "Ab focused workout with 6 exercises, 1 set each, 30 seconds per exercise",
+  "difficulty": 4,
+  "reps": 3,
+  "tags": ["strength", "focused", "upper-body", "core"],
+  "workouts": [
+    {
+      "name": "Sprinter Abs",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Lie on your back, lift legs to 90 degrees, and alternate bringing knees to chest quickly"
+    },
+    {
+      "name": "Flutter Kicks",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Lie on your back, lift legs slightly off the ground, and alternate kicking them up and down"
+    },
+    {
+      "name": "Reverse Crunches",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Lie on your back, lift legs to 90 degrees, and curl hips off the ground towards your chest"
+    },
+    {
+      "name": "V Sit ups",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Sit on the ground with legs extended, lean back and lift legs to form a 'V' shape, then return to start"
+    },
+    {
+      "name": "Plank",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Start in a plank position on hands, keeping body straight from head to heels"
+    },
+    {
+      "name": "Feet out to in",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Start in a plank position on hands, jump feet out wide and then back together"
+    }
+  ]
+}

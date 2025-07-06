@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "AB+zpw6jO8E=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dbm82\\Source\\Repos\\Freelance\\DreampipeStudios\\hitt-cli\\hitt-cli\\hitt-cli.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dbm82\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.22.1-preview.1\\microsoft.visualstudio.azure.containers.tools.targets.1.22.1-preview.1.nupkg.sha512",
+    "C:\\Users\\dbm82\\.nuget\\packages\\spectre.console\\0.50.0\\spectre.console.0.50.0.nupkg.sha512",
+    "C:\\Users\\dbm82\\.nuget\\packages\\system.memory\\4.6.3\\system.memory.4.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}

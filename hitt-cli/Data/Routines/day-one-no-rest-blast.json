@@ -1,0 +1,79 @@
+{
+  "name": "Day One No Rest Blast",
+  "description": "All around workout with no rest between exercises, focusing on strength and endurance",
+  "difficulty": 4,
+  "reps": 3,
+  "tags": ["strength", "focused", "upper-body", "core"],
+  "workouts": [
+    {
+      "name": "High knees",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Stand in place and run, bringing knees up to waist level"
+    },
+    {
+      "name": "Push-ups",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Standard push-ups focusing on form"
+    },
+    {
+      "name": "Squats",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Stand with feet shoulder-width apart, lower body as if sitting in a chair"
+    },
+    {
+      "name": "Sit ups",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Lie on your back with knees bent, lift upper body towards knees"
+    },
+    {
+      "name": "Mountain Climbers",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Start in a plank position, alternate bringing knees to chest quickly"
+    },
+    {
+      "name": "Elbows to hands plank",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Start in a plank position on elbows"
+    },
+    {
+      "name": "Alternating lunges",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "From standing, step forward into a lunge, alternating legs"
+    },
+    {
+      "name": "Dips",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Use a chair or bench, lower body by bending elbows, then push back up"
+    },
+    {
+      "name": "Burpees",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "From standing, drop into a squat, kick feet back into a plank, return to squat, and jump up"
+    },
+    {
+      "name": "Leg Raise Circles",
+      "sets": 1,
+      "length": 30,
+      "rest": 0,
+      "description": "Lie on your back, lift legs to 90 degrees, and make small circles"
+    }
+  ]
+}
