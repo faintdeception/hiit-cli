@@ -1,0 +1,43 @@
+{
+  "name": "Morning HIIT Blast",
+  "description": "A quick but intense morning workout to get your heart pumping",
+  "difficulty": 3,
+  "tags": ["cardio", "hiit", "morning", "full-body"],
+  "workouts": [
+    {
+      "name": "Jumping Jacks",
+      "sets": 3,
+      "length": 30,
+      "rest": 15,
+      "description": "High energy full-body warm-up exercise"
+    },
+    {
+      "name": "Pushups",
+      "sets": 3,
+      "length": 25,
+      "rest": 30,
+      "description": "Classic upper body strength exercise"
+    },
+    {
+      "name": "Squats",
+      "sets": 3,
+      "length": 30,
+      "rest": 20,
+      "description": "Lower body strength and endurance"
+    },
+    {
+      "name": "Burpees",
+      "sets": 2,
+      "length": 20,
+      "rest": 45,
+      "description": "Full body explosive movement"
+    },
+    {
+      "name": "Plank",
+      "sets": 2,
+      "length": 30,
+      "rest": 30,
+      "description": "Core stability and strength"
+    }
+  ]
+}

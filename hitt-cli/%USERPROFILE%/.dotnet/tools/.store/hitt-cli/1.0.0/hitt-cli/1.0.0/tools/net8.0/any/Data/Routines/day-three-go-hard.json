@@ -1,0 +1,51 @@
+{
+  "name": "Day Three All Around End The Week Workout",
+  "description": "",
+  "difficulty": 4,
+  "reps": 3,
+  "tags": ["strength", "endurance", "full-body"],
+  "workouts": [
+    {
+      "name": "High knees + Boxing",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Stand tall and run in place, bringing knees up to hip level while punching arms forward"
+    },
+    {
+      "name": "Push-ups + Side Turn",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Start in a push-up position, perform a push-up, then rotate to one side and extend the top arm"
+    },
+    {
+      "name": "Bicycle Abs",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Lie on your back, lift legs to 90 degrees, and alternate bringing knees to chest while extending the opposite leg"
+    },
+    {
+      "name": "Alternating Lunges",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Step forward with one leg, lowering hips until both knees are bent at about a 90-degree angle"
+    },
+    {
+      "name": "Mountain Climbers",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Start in a plank position, alternate bringing knees to chest quickly as if running in place"
+    },
+    {
+      "name": "Dips",
+      "sets": 1,
+      "length": 30,
+      "rest": 30,
+      "description": "Start in a seated position with hands on the edge of a bench, lower body towards the ground and then push back up"
+    }
+  ]
+}

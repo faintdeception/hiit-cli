@@ -54,17 +54,27 @@ namespace hitt_cli.Services
                     var workout = routine.Workouts[workoutIndex - 1];
                     await ExecuteWorkoutAsync(workout, workoutIndex, totalWorkouts, currentRep, routine.Reps, cancellationToken);
                     
-                    // Add a brief pause between workouts (except for the last workout in the last rep)
-                    if (workoutIndex < totalWorkouts || currentRep < routine.Reps)
+                    // Handle rest between exercises (not after the last exercise in the last rep)
+                    var isLastExerciseInLastRep = (workoutIndex == totalWorkouts && currentRep == routine.Reps);
+                    
+                    if (!isLastExerciseInLastRep && !cancellationToken.IsCancellationRequested)
                     {
                         AnsiConsole.WriteLine();
+                        
                         if (routine.Workouts.All(w => w.Rest == 0)) // No-rest routine
                         {
                             AnsiConsole.MarkupLine($"[dim]Moving to next exercise...[/]");
                             await Task.Delay(1000, cancellationToken);
                         }
+                        else if (workout.Rest > 0)
+                        {
+                            // Use the actual rest time specified for this exercise
+                            AnsiConsole.MarkupLine($"[yellow]Rest time - catch your breath![/]");
+                            await ExecuteTimerAsync("Rest", workout.Rest, Color.Yellow, cancellationToken);
+                        }
                         else
                         {
+                            // Brief preparation for exercises with no rest specified
                             AnsiConsole.MarkupLine($"[dim]Preparing for next exercise...[/]");
                             await Task.Delay(2000, cancellationToken);
                         }
