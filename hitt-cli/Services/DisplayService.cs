@@ -8,6 +8,7 @@ namespace hitt_cli.Services
     public static class DisplayService
     {
         private static bool? _supportsEmojis;
+        private static bool? _audioEnabled;
         
         /// <summary>
         /// Checks if the current terminal/environment supports emoji display
@@ -56,6 +57,43 @@ namespace hitt_cli.Services
         {
             _supportsEmojis = supported;
         }
+
+        /// <summary>
+        /// Checks if audio cues are enabled
+        /// </summary>
+        public static bool AudioEnabled
+        {
+            get
+            {
+                if (_audioEnabled.HasValue)
+                    return _audioEnabled.Value;
+
+                // Check environment variable for audio preference
+                var envAudio = Environment.GetEnvironmentVariable("HITT_CLI_AUDIO");
+                if (!string.IsNullOrEmpty(envAudio))
+                {
+                    _audioEnabled = envAudio.ToLowerInvariant() == "true";
+                    return _audioEnabled.Value;
+                }
+
+                // Default to enabled
+                _audioEnabled = true;
+                return _audioEnabled.Value;
+            }
+        }
+
+        /// <summary>
+        /// Forces audio on or off
+        /// </summary>
+        public static void SetAudioEnabled(bool enabled)
+        {
+            _audioEnabled = enabled;
+        }
+
+        /// <summary>
+        /// Helper method for checking if audio is enabled
+        /// </summary>
+        public static bool IsAudioEnabled() => AudioEnabled;
 
         /// <summary>
         /// Gets an appropriate symbol for fire/intensity

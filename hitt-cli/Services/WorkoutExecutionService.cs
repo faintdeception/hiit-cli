@@ -217,7 +217,7 @@ namespace hitt_cli.Services
                         if (i <= 3 && activity.StartsWith("GO!"))
                         {
                             task.Description = $"[{color}]{activity}[/] - [bold red]{i}![/]";
-                            // Add audio-like countdown for final seconds
+                            // Add visual countdown for final seconds
                             AnsiConsole.MarkupLine($"                    [bold red]{i}...[/]");
                         }
                         else if (i <= 5 && activity.StartsWith("GO!"))
@@ -239,16 +239,232 @@ namespace hitt_cli.Services
                         if (activity.StartsWith("GO!"))
                         {
                             task.Description = $"[{color}]{activity}[/] - [bold green]DONE! {DisplayService.Fire}[/]";
+                            
+                            // Play completion sound after the exercise is done
+                            PlayCompletionSound();
                         }
                         else
                         {
                             task.Description = $"[{color}]{activity}[/] - [green]Complete![/]";
+                            
+                            // Play softer completion sound for rest periods
+                            PlayRestCompletionSound();
                         }
                         
                         // Brief pause to show completion
                         await Task.Delay(500, cancellationToken);
                     }
                 });
+        }
+
+        /// <summary>
+        /// Plays exercise completion sound using the bundled audio file
+        /// </summary>
+        private void PlayCompletionSound()
+        {
+            if (!DisplayService.AudioEnabled) return;
+            
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    PlayAudioFile();
+                }
+                catch
+                {
+                    // If audio file fails, fall back to system beep
+                    PlaySystemBeep();
+                }
+            });
+        }
+
+        /// <summary>
+        /// Plays rest completion sound (softer system beep)
+        /// </summary>
+        private void PlayRestCompletionSound()
+        {
+            if (!DisplayService.AudioEnabled) return;
+            
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    if (OperatingSystem.IsWindows())
+                    {
+                        // Gentle single beep for rest completion
+                        Console.Beep(700, 200);
+                    }
+                    else
+                    {
+                        Console.Write("\a");
+                    }
+                }
+                catch
+                {
+                    // Ignore audio errors
+                }
+            });
+        }
+
+        /// <summary>
+        /// Plays the bundled audio file cross-platform
+        /// </summary>
+        private void PlayAudioFile()
+        {
+            try
+            {
+                // Get the audio file path relative to the executable
+                var audioPath = Path.Combine(AppContext.BaseDirectory, "assets", "audio", "ok-2.wav");
+                
+                if (!File.Exists(audioPath))
+                {
+                    // Fall back to system beep if audio file not found
+                    PlaySystemBeep();
+                    return;
+                }
+
+                if (OperatingSystem.IsWindows())
+                {
+                    // Use Windows API to play the sound
+                    PlayWindowsSound(audioPath);
+                }
+                else if (OperatingSystem.IsLinux())
+                {
+                    // Use aplay or paplay on Linux
+                    PlayLinuxSound(audioPath);
+                }
+                else if (OperatingSystem.IsMacOS())
+                {
+                    // Use afplay on macOS
+                    PlayMacSound(audioPath);
+                }
+                else
+                {
+                    // Unknown platform, fall back to system beep
+                    PlaySystemBeep();
+                }
+            }
+            catch
+            {
+                // If anything fails, fall back to system beep
+                PlaySystemBeep();
+            }
+        }
+
+        /// <summary>
+        /// Plays sound on Windows using System.Media.SoundPlayer
+        /// </summary>
+        [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+        private void PlayWindowsSound(string audioPath)
+        {
+            try
+            {
+                // Use the built-in .NET SoundPlayer for Windows
+                using var player = new System.Media.SoundPlayer(audioPath);
+                player.Play(); // Non-blocking play
+            }
+            catch
+            {
+                PlaySystemBeep();
+            }
+        }
+
+        /// <summary>
+        /// Plays sound on Linux using common audio tools
+        /// </summary>
+        private void PlayLinuxSound(string audioPath)
+        {
+            try
+            {
+                // Try different common Linux audio players
+                var players = new[] { "aplay", "paplay", "play" };
+                
+                foreach (var player in players)
+                {
+                    try
+                    {
+                        var process = new System.Diagnostics.Process
+                        {
+                            StartInfo = new System.Diagnostics.ProcessStartInfo
+                            {
+                                FileName = player,
+                                Arguments = $"\"{audioPath}\"",
+                                UseShellExecute = false,
+                                CreateNoWindow = true,
+                                RedirectStandardOutput = true,
+                                RedirectStandardError = true
+                            }
+                        };
+                        
+                        process.Start();
+                        // Don't wait for completion, let it play in background
+                        return;
+                    }
+                    catch
+                    {
+                        // Try next player
+                        continue;
+                    }
+                }
+                
+                // If all players fail, use system beep
+                PlaySystemBeep();
+            }
+            catch
+            {
+                PlaySystemBeep();
+            }
+        }
+
+        /// <summary>
+        /// Plays sound on macOS using afplay
+        /// </summary>
+        private void PlayMacSound(string audioPath)
+        {
+            try
+            {
+                var process = new System.Diagnostics.Process
+                {
+                    StartInfo = new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = "afplay",
+                        Arguments = $"\"{audioPath}\"",
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true
+                    }
+                };
+                
+                process.Start();
+                // Don't wait for completion, let it play in background
+            }
+            catch
+            {
+                PlaySystemBeep();
+            }
+        }
+
+        /// <summary>
+        /// Fallback system beep for when audio file playback fails
+        /// </summary>
+        private void PlaySystemBeep()
+        {
+            try
+            {
+                if (OperatingSystem.IsWindows())
+                {
+                    Console.Beep(800, 200);
+                }
+                else
+                {
+                    Console.Write("\a");
+                }
+            }
+            catch
+            {
+                // Ignore beep errors
+            }
         }
 
         /// <summary>
