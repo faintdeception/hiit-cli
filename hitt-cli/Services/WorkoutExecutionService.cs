@@ -268,7 +268,33 @@ namespace hitt_cli.Services
             {
                 try
                 {
-                    PlayAudioFileSync();
+                    var baseDirectory = AppContext.BaseDirectory;
+                    var audioPath = Path.Combine(baseDirectory, "assets", "audio", "ok-2.wav");
+                    
+                    if (!File.Exists(audioPath))
+                    {
+                        PlaySystemBeep();
+                        return;
+                    }
+
+                    if (OperatingSystem.IsWindows())
+                    {
+                        using var player = new System.Media.SoundPlayer(audioPath);
+                        player.Load(); // Explicitly load the file first
+                        player.PlaySync(); // Use synchronous playback for reliability
+                    }
+                    else if (OperatingSystem.IsLinux())
+                    {
+                        PlayLinuxSound(audioPath);
+                    }
+                    else if (OperatingSystem.IsMacOS())
+                    {
+                        PlayMacSound(audioPath);
+                    }
+                    else
+                    {
+                        PlaySystemBeep();
+                    }
                 }
                 catch
                 {
@@ -276,39 +302,6 @@ namespace hitt_cli.Services
                     PlaySystemBeep();
                 }
             });
-        }
-
-        /// <summary>
-        /// Plays the audio file synchronously for reliable playback
-        /// </summary>
-        private void PlayAudioFileSync()
-        {
-            var baseDirectory = AppContext.BaseDirectory;
-            var audioPath = Path.Combine(baseDirectory, "assets", "audio", "ok-2.wav");
-            
-            if (!File.Exists(audioPath))
-            {
-                PlaySystemBeep();
-                return;
-            }
-
-            if (OperatingSystem.IsWindows())
-            {
-                using var player = new System.Media.SoundPlayer(audioPath);
-                player.PlaySync(); // Use synchronous playback for reliability
-            }
-            else if (OperatingSystem.IsLinux())
-            {
-                PlayLinuxSound(audioPath);
-            }
-            else if (OperatingSystem.IsMacOS())
-            {
-                PlayMacSound(audioPath);
-            }
-            else
-            {
-                PlaySystemBeep();
-            }
         }
 
         /// <summary>
