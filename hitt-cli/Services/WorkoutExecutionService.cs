@@ -273,32 +273,50 @@ namespace hitt_cli.Services
                     
                     if (!File.Exists(audioPath))
                     {
+                        if (DisplayService.AudioDebugEnabled)
+                            AnsiConsole.MarkupLine("[dim]🔊 Audio file not found, using system beep[/]");
+                        
                         PlaySystemBeep();
                         return;
                     }
 
                     if (OperatingSystem.IsWindows())
                     {
+                        if (DisplayService.AudioDebugEnabled)
+                            AnsiConsole.MarkupLine("[dim]🔊 Playing Windows completion sound[/]");
+                        
                         using var player = new System.Media.SoundPlayer(audioPath);
                         player.Load(); // Explicitly load the file first
                         player.PlaySync(); // Use synchronous playback for reliability
                     }
                     else if (OperatingSystem.IsLinux())
                     {
+                        if (DisplayService.AudioDebugEnabled)
+                            AnsiConsole.MarkupLine("[dim]🔊 Playing Linux completion sound[/]");
+                        
                         PlayLinuxSound(audioPath);
                     }
                     else if (OperatingSystem.IsMacOS())
                     {
+                        if (DisplayService.AudioDebugEnabled)
+                            AnsiConsole.MarkupLine("[dim]🔊 Playing macOS completion sound[/]");
+                        
                         PlayMacSound(audioPath);
                     }
                     else
                     {
+                        if (DisplayService.AudioDebugEnabled)
+                            AnsiConsole.MarkupLine("[dim]🔊 Playing system beep (unsupported platform)[/]");
+                        
                         PlaySystemBeep();
                     }
                 }
                 catch
                 {
                     // If audio file fails, fall back to system beep
+                    if (DisplayService.AudioDebugEnabled)
+                        AnsiConsole.MarkupLine("[dim]🔊 Audio file failed, falling back to system beep[/]");
+                    
                     PlaySystemBeep();
                 }
             });
@@ -317,11 +335,17 @@ namespace hitt_cli.Services
                 {
                     if (OperatingSystem.IsWindows())
                     {
+                        if (DisplayService.AudioDebugEnabled)
+                            AnsiConsole.MarkupLine("[dim]🔊 Playing Windows rest beep[/]");
+                        
                         // Gentle single beep for rest completion
                         Console.Beep(700, 200);
                     }
                     else
                     {
+                        if (DisplayService.AudioDebugEnabled)
+                            AnsiConsole.MarkupLine("[dim]🔊 Playing system alert for rest[/]");
+                        
                         Console.Write("\a");
                     }
                 }
@@ -435,10 +459,16 @@ namespace hitt_cli.Services
             {
                 if (OperatingSystem.IsWindows())
                 {
+                    if (DisplayService.AudioDebugEnabled)
+                        AnsiConsole.MarkupLine("[dim]🔊 Playing Windows system beep fallback[/]");
+                    
                     Console.Beep(800, 200);
                 }
                 else
                 {
+                    if (DisplayService.AudioDebugEnabled)
+                        AnsiConsole.MarkupLine("[dim]🔊 Playing system alert fallback[/]");
+                    
                     Console.Write("\a");
                 }
             }

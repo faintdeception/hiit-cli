@@ -36,6 +36,12 @@ namespace hitt_cli
                     DisplayService.SetAudioEnabled(true);
                 }
 
+                // Check for audio debug flag
+                if (args.Contains("--audio-debug"))
+                {
+                    DisplayService.SetAudioDebugEnabled(true);
+                }
+
                 // Initialize services
                 InitializeServices();
 
@@ -89,7 +95,8 @@ namespace hitt_cli
             // Show current settings status
             var emojiStatus = DisplayService.SupportsEmojis ? "[green]ON[/]" : "[red]OFF[/]";
             var audioStatus = DisplayService.AudioEnabled ? "[green]ON[/]" : "[red]OFF[/]";
-            AnsiConsole.MarkupLine($"[dim]Emojis: {emojiStatus} | Audio: {audioStatus}[/]");
+            var debugInfo = DisplayService.AudioDebugEnabled ? " | Audio Debug: [yellow]ON[/]" : "";
+            AnsiConsole.MarkupLine($"[dim]Emojis: {emojiStatus} | Audio: {audioStatus}{debugInfo}[/]");
             AnsiConsole.WriteLine();
         }
 
@@ -375,6 +382,7 @@ namespace hitt_cli
             AnsiConsole.MarkupLine("  [green]hitt list[/]               - List available schedules and routines");
             AnsiConsole.MarkupLine("  [green]hitt run <routine>[/]      - Run a specific routine");
             AnsiConsole.MarkupLine("  [green]hitt preview <routine>[/]  - Preview a routine without running");
+            AnsiConsole.MarkupLine("  [green]hitt debug-audio[/]        - Test audio playback and paths");
             AnsiConsole.MarkupLine("  [green]hitt help[/]               - Show this help");
             AnsiConsole.WriteLine();
             AnsiConsole.MarkupLine("[bold]Options:[/]");
@@ -382,10 +390,12 @@ namespace hitt_cli
             AnsiConsole.MarkupLine("  [cyan]--no-emoji, --text-only[/]  - Use text symbols instead of emojis");
             AnsiConsole.MarkupLine("  [cyan]--audio[/]                  - Enable audio cues for timers (default)");
             AnsiConsole.MarkupLine("  [cyan]--no-audio, --silent[/]     - Disable all audio cues");
+            AnsiConsole.MarkupLine("  [cyan]--audio-debug[/]            - Show audio method being used for playback");
             AnsiConsole.WriteLine();
             AnsiConsole.MarkupLine("[dim]Environment variables:[/]");
-            AnsiConsole.MarkupLine("[dim]  HITT_CLI_EMOJIS=true/false  - Control emoji display[/]");
-            AnsiConsole.MarkupLine("[dim]  HITT_CLI_AUDIO=true/false   - Control audio cues[/]");
+            AnsiConsole.MarkupLine("[dim]  HITT_CLI_EMOJIS=true/false      - Control emoji display[/]");
+            AnsiConsole.MarkupLine("[dim]  HITT_CLI_AUDIO=true/false       - Control audio cues[/]");
+            AnsiConsole.MarkupLine("[dim]  HITT_CLI_AUDIO_DEBUG=true/false - Show audio debug info[/]");
             AnsiConsole.MarkupLine("[dim]Place your workout data files in a 'Data' directory with 'Routines' and 'Schedules' subdirectories.[/]");
         }
     }

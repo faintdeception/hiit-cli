@@ -9,6 +9,7 @@ namespace hitt_cli.Services
     {
         private static bool? _supportsEmojis;
         private static bool? _audioEnabled;
+        private static bool? _audioDebugEnabled;
         
         /// <summary>
         /// Checks if the current terminal/environment supports emoji display
@@ -88,6 +89,38 @@ namespace hitt_cli.Services
         public static void SetAudioEnabled(bool enabled)
         {
             _audioEnabled = enabled;
+        }
+
+        /// <summary>
+        /// Checks if audio debug mode is enabled
+        /// </summary>
+        public static bool AudioDebugEnabled
+        {
+            get
+            {
+                if (_audioDebugEnabled.HasValue)
+                    return _audioDebugEnabled.Value;
+
+                // Check environment variable for audio debug preference
+                var envAudioDebug = Environment.GetEnvironmentVariable("HITT_CLI_AUDIO_DEBUG");
+                if (!string.IsNullOrEmpty(envAudioDebug))
+                {
+                    _audioDebugEnabled = envAudioDebug.ToLowerInvariant() == "true";
+                    return _audioDebugEnabled.Value;
+                }
+
+                // Default to disabled
+                _audioDebugEnabled = false;
+                return _audioDebugEnabled.Value;
+            }
+        }
+
+        /// <summary>
+        /// Forces audio debug mode on or off
+        /// </summary>
+        public static void SetAudioDebugEnabled(bool enabled)
+        {
+            _audioDebugEnabled = enabled;
         }
 
         /// <summary>
