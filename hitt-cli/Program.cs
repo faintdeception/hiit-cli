@@ -137,6 +137,9 @@ namespace hitt_cli
                 case "-h":
                     ShowHelp();
                     break;
+                case "debug-audio":
+                    _executionService.TestAudioPath();
+                    break;
                 default:
                     AnsiConsole.MarkupLine($"[red]Unknown command: {command}[/]");
                     ShowHelp();

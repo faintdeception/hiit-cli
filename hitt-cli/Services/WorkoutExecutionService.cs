@@ -264,16 +264,18 @@ namespace hitt_cli.Services
         {
             if (!DisplayService.AudioEnabled) return;
             
-            try
+            _ = Task.Run(() =>
             {
-                // Play synchronously to ensure it works
-                PlayAudioFileSync();
-            }
-            catch
-            {
-                // If audio file fails, fall back to system beep
-                PlaySystemBeep();
-            }
+                try
+                {
+                    PlayAudioFileSync();
+                }
+                catch
+                {
+                    // If audio file fails, fall back to system beep
+                    PlaySystemBeep();
+                }
+            });
         }
 
         /// <summary>
@@ -316,22 +318,25 @@ namespace hitt_cli.Services
         {
             if (!DisplayService.AudioEnabled) return;
             
-            try
+            _ = Task.Run(() =>
             {
-                if (OperatingSystem.IsWindows())
+                try
                 {
-                    // Gentle single beep for rest completion
-                    Console.Beep(700, 200);
+                    if (OperatingSystem.IsWindows())
+                    {
+                        // Gentle single beep for rest completion
+                        Console.Beep(700, 200);
+                    }
+                    else
+                    {
+                        Console.Write("\a");
+                    }
                 }
-                else
+                catch
                 {
-                    Console.Write("\a");
+                    // Ignore audio errors
                 }
-            }
-            catch
-            {
-                // Ignore audio errors
-            }
+            });
         }
 
         /// <summary>
@@ -580,6 +585,88 @@ namespace hitt_cli.Services
             else
             {
                 AnsiConsole.MarkupLine($"[bold]Total Routine Time:[/] {routine.GetFormattedTotalTime()}");
+            }
+        }
+        
+        /// <summary>
+        /// Debug method to test audio file path resolution and playback
+        /// </summary>
+        public void TestAudioPath()
+        {
+            AnsiConsole.MarkupLine("[yellow]Testing audio file paths...[/]");
+            
+            var baseDirectory = AppContext.BaseDirectory;
+            AnsiConsole.MarkupLine($"[dim]Base Directory: {baseDirectory}[/]");
+            
+            var paths = new[]
+            {
+                Path.Combine(baseDirectory, "assets", "audio", "ok-2.wav"),
+                Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "", "assets", "audio", "ok-2.wav"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".dotnet", "tools", ".store", "hitt-cli", "1.0.0", "hitt-cli", "1.0.0", "tools", "net8.0", "any", "assets", "audio", "ok-2.wav")
+            };
+            
+            string? validPath = null;
+            for (int i = 0; i < paths.Length; i++)
+            {
+                var exists = File.Exists(paths[i]);
+                var status = exists ? "[green]EXISTS[/]" : "[red]NOT FOUND[/]";
+                AnsiConsole.MarkupLine($"[dim]Path {i + 1}: {status} - {paths[i]}[/]");
+                if (exists && validPath == null)
+                    validPath = paths[i];
+            }
+            
+            // Additional debugging info
+            AnsiConsole.MarkupLine($"[dim]Current OS: {Environment.OSVersion}[/]");
+            AnsiConsole.MarkupLine($"[dim]Audio Enabled: {DisplayService.AudioEnabled}[/]");
+            AnsiConsole.MarkupLine($"[dim]Is Windows: {OperatingSystem.IsWindows()}[/]");
+            
+            if (validPath != null)
+            {
+                AnsiConsole.MarkupLine($"[green]Found valid audio file at: {validPath}[/]");
+                
+                // Check file properties
+                var fileInfo = new FileInfo(validPath);
+                AnsiConsole.MarkupLine($"[dim]File size: {fileInfo.Length} bytes[/]");
+                AnsiConsole.MarkupLine($"[dim]File last modified: {fileInfo.LastWriteTime}[/]");
+                
+                AnsiConsole.MarkupLine("[yellow]Testing audio playback...[/]");
+                
+                // Test the actual playback
+                try
+                {
+                    if (OperatingSystem.IsWindows())
+                    {
+                        AnsiConsole.MarkupLine("[blue]Attempting Windows audio playback...[/]");
+                        using var player = new System.Media.SoundPlayer(validPath);
+                        
+                        // First try to load the file
+                        player.Load();
+                        AnsiConsole.MarkupLine("[green]Audio file loaded successfully![/]");
+                        
+                        // Now try to play it
+                        player.PlaySync(); // Use sync for testing
+                        AnsiConsole.MarkupLine("[green]Windows audio playback successful![/]");
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine("[blue]Non-Windows platform - would use system commands[/]");
+                        AnsiConsole.MarkupLine("[yellow]Testing system beep fallback...[/]");
+                        PlaySystemBeep();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    AnsiConsole.MarkupLine($"[red]Audio playback failed: {ex.Message}[/]");
+                    AnsiConsole.MarkupLine($"[red]Exception type: {ex.GetType().Name}[/]");
+                    AnsiConsole.MarkupLine("[yellow]Falling back to system beep...[/]");
+                    PlaySystemBeep();
+                }
+            }
+            else
+            {
+                AnsiConsole.MarkupLine("[red]No valid audio file found![/]");
+                AnsiConsole.MarkupLine("[yellow]Testing system beep fallback...[/]");
+                PlaySystemBeep();
             }
         }
     }
