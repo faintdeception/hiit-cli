@@ -23,6 +23,8 @@
   <ItemGroup>
     <None Include="assets\audio\ok-2.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>true</Pack>
+      <PackagePath>tools/net8.0/any/assets/audio/ok-2.wav</PackagePath>
     </None>
   </ItemGroup>
 

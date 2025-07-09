@@ -264,18 +264,49 @@ namespace hitt_cli.Services
         {
             if (!DisplayService.AudioEnabled) return;
             
-            _ = Task.Run(() =>
+            try
             {
-                try
-                {
-                    PlayAudioFile();
-                }
-                catch
-                {
-                    // If audio file fails, fall back to system beep
-                    PlaySystemBeep();
-                }
-            });
+                // Play synchronously to ensure it works
+                PlayAudioFileSync();
+            }
+            catch
+            {
+                // If audio file fails, fall back to system beep
+                PlaySystemBeep();
+            }
+        }
+
+        /// <summary>
+        /// Plays the audio file synchronously for reliable playback
+        /// </summary>
+        private void PlayAudioFileSync()
+        {
+            var baseDirectory = AppContext.BaseDirectory;
+            var audioPath = Path.Combine(baseDirectory, "assets", "audio", "ok-2.wav");
+            
+            if (!File.Exists(audioPath))
+            {
+                PlaySystemBeep();
+                return;
+            }
+
+            if (OperatingSystem.IsWindows())
+            {
+                using var player = new System.Media.SoundPlayer(audioPath);
+                player.PlaySync(); // Use synchronous playback for reliability
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                PlayLinuxSound(audioPath);
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                PlayMacSound(audioPath);
+            }
+            else
+            {
+                PlaySystemBeep();
+            }
         }
 
         /// <summary>
@@ -285,69 +316,21 @@ namespace hitt_cli.Services
         {
             if (!DisplayService.AudioEnabled) return;
             
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    if (OperatingSystem.IsWindows())
-                    {
-                        // Gentle single beep for rest completion
-                        Console.Beep(700, 200);
-                    }
-                    else
-                    {
-                        Console.Write("\a");
-                    }
-                }
-                catch
-                {
-                    // Ignore audio errors
-                }
-            });
-        }
-
-        /// <summary>
-        /// Plays the bundled audio file cross-platform
-        /// </summary>
-        private void PlayAudioFile()
-        {
             try
             {
-                // Get the audio file path relative to the executable
-                var audioPath = Path.Combine(AppContext.BaseDirectory, "assets", "audio", "ok-2.wav");
-                
-                if (!File.Exists(audioPath))
-                {
-                    // Fall back to system beep if audio file not found
-                    PlaySystemBeep();
-                    return;
-                }
-
                 if (OperatingSystem.IsWindows())
                 {
-                    // Use Windows API to play the sound
-                    PlayWindowsSound(audioPath);
-                }
-                else if (OperatingSystem.IsLinux())
-                {
-                    // Use aplay or paplay on Linux
-                    PlayLinuxSound(audioPath);
-                }
-                else if (OperatingSystem.IsMacOS())
-                {
-                    // Use afplay on macOS
-                    PlayMacSound(audioPath);
+                    // Gentle single beep for rest completion
+                    Console.Beep(700, 200);
                 }
                 else
                 {
-                    // Unknown platform, fall back to system beep
-                    PlaySystemBeep();
+                    Console.Write("\a");
                 }
             }
             catch
             {
-                // If anything fails, fall back to system beep
-                PlaySystemBeep();
+                // Ignore audio errors
             }
         }
 
