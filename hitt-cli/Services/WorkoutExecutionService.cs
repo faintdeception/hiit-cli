@@ -159,7 +159,7 @@ namespace hitt_cli.Services
                 }
 
                 // Execute the set with enhanced messaging
-                var activityName = isNoRestWorkout ? $"GO! {workout.Name}" : $"{workout.Name}";
+                var activityName = $"GO! {workout.Name}";
                 await ExecuteTimerAsync(activityName, workout.Length, Color.Green, cancellationToken);
                 
                 AnsiConsole.MarkupLine("[bold green]✓ Set Complete![/]");
