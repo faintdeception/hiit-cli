@@ -67,18 +67,8 @@ namespace hitt_cli
 
         static void InitializeServices()
         {
-            // Initialize services with the Data directory in the current working directory
-            // This allows the tool to work from any directory if Data folder is present
-            var currentDir = Directory.GetCurrentDirectory();
-            var dataPath = Path.Combine(currentDir, "Data");
-            
-            // If Data directory doesn't exist in current directory, use the application directory
-            if (!Directory.Exists(dataPath))
-            {
-                dataPath = Path.Combine(AppContext.BaseDirectory, "Data");
-            }
-
-            _dataService = new WorkoutDataService(dataPath);
+            // Initialize services - WorkoutDataService will handle proper data directory selection
+            _dataService = new WorkoutDataService();
             _scheduleService = new WorkoutScheduleService(_dataService);
             _executionService = new WorkoutExecutionService();
         }
@@ -146,6 +136,11 @@ namespace hitt_cli
                     break;
                 case "debug-audio":
                     _executionService.TestAudioPath();
+                    break;
+                case "data":
+                case "data-dir":
+                case "datadir":
+                    ShowDataDirectory();
                     break;
                 default:
                     AnsiConsole.MarkupLine($"[red]Unknown command: {command}[/]");
@@ -383,6 +378,7 @@ namespace hitt_cli
             AnsiConsole.MarkupLine("  [green]hitt run <routine>[/]      - Run a specific routine");
             AnsiConsole.MarkupLine("  [green]hitt preview <routine>[/]  - Preview a routine without running");
             AnsiConsole.MarkupLine("  [green]hitt debug-audio[/]        - Test audio playback and paths");
+            AnsiConsole.MarkupLine("  [green]hitt data[/]               - Show data directory location and status");
             AnsiConsole.MarkupLine("  [green]hitt help[/]               - Show this help");
             AnsiConsole.WriteLine();
             AnsiConsole.MarkupLine("[bold]Options:[/]");
@@ -396,7 +392,31 @@ namespace hitt_cli
             AnsiConsole.MarkupLine("[dim]  HITT_CLI_EMOJIS=true/false      - Control emoji display[/]");
             AnsiConsole.MarkupLine("[dim]  HITT_CLI_AUDIO=true/false       - Control audio cues[/]");
             AnsiConsole.MarkupLine("[dim]  HITT_CLI_AUDIO_DEBUG=true/false - Show audio debug info[/]");
-            AnsiConsole.MarkupLine("[dim]Place your workout data files in a 'Data' directory with 'Routines' and 'Schedules' subdirectories.[/]");
+            AnsiConsole.MarkupLine("[dim]You can add custom workout routines and schedules to your data directory.[/]");
+        }
+
+        static void ShowDataDirectory()
+        {
+            AnsiConsole.MarkupLine("[bold yellow]HITT CLI - Data Directory Information:[/]");
+            AnsiConsole.WriteLine();
+            
+            AnsiConsole.MarkupLine($"[bold]Data Directory:[/] [green]{_dataService.DataDirectory}[/]");
+            AnsiConsole.MarkupLine($"[bold]Routines:[/] [cyan]{_dataService.RoutinesDirectory}[/]");
+            AnsiConsole.MarkupLine($"[bold]Schedules:[/] [cyan]{_dataService.SchedulesDirectory}[/]");
+            AnsiConsole.WriteLine();
+            
+            // Show directory status
+            var dataExists = Directory.Exists(_dataService.DataDirectory);
+            var routinesCount = dataExists ? Directory.GetFiles(_dataService.RoutinesDirectory, "*.json").Length : 0;
+            var schedulesCount = dataExists ? Directory.GetFiles(_dataService.SchedulesDirectory, "*.json").Length : 0;
+            
+            AnsiConsole.MarkupLine($"[bold]Status:[/]");
+            AnsiConsole.MarkupLine($"  • Data directory: {(dataExists ? "[green]EXISTS[/]" : "[red]NOT FOUND[/]")}");
+            AnsiConsole.MarkupLine($"  • Routine files: [cyan]{routinesCount}[/] found");
+            AnsiConsole.MarkupLine($"  • Schedule files: [cyan]{schedulesCount}[/] found");
+            AnsiConsole.WriteLine();
+            
+            AnsiConsole.MarkupLine("[dim]You can add custom JSON files to these directories to extend your workout library.[/]");
         }
     }
 }

@@ -13,9 +13,24 @@ namespace hitt_cli.Services
         private readonly string _schedulesDirectory;
         private readonly JsonSerializerOptions _jsonOptions;
 
+        /// <summary>
+        /// Gets the path to the data directory being used
+        /// </summary>
+        public string DataDirectory => _dataDirectory;
+
+        /// <summary>
+        /// Gets the path to the routines directory
+        /// </summary>
+        public string RoutinesDirectory => _routinesDirectory;
+
+        /// <summary>
+        /// Gets the path to the schedules directory
+        /// </summary>
+        public string SchedulesDirectory => _schedulesDirectory;
+
         public WorkoutDataService(string? dataDirectory = null)
         {
-            _dataDirectory = dataDirectory ?? Path.Combine(AppContext.BaseDirectory, "Data");
+            _dataDirectory = dataDirectory ?? GetDefaultDataDirectory();
             _routinesDirectory = Path.Combine(_dataDirectory, "Routines");
             _schedulesDirectory = Path.Combine(_dataDirectory, "Schedules");
             
@@ -29,13 +44,97 @@ namespace hitt_cli.Services
         }
 
         /// <summary>
-        /// Ensures the required directories exist
+        /// Gets the platform-appropriate default data directory
+        /// </summary>
+        private static string GetDefaultDataDirectory()
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                // Windows: %LOCALAPPDATA%\HITT-CLI
+                var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                return Path.Combine(localAppData, "HITT-CLI");
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                // macOS: ~/Library/Application Support/HITT-CLI
+                var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                return Path.Combine(homeDir, "Library", "Application Support", "HITT-CLI");
+            }
+            else
+            {
+                // Linux/Unix: ~/.local/share/HITT-CLI or $XDG_DATA_HOME/HITT-CLI
+                var xdgDataHome = Environment.GetEnvironmentVariable("XDG_DATA_HOME");
+                if (!string.IsNullOrEmpty(xdgDataHome))
+                {
+                    return Path.Combine(xdgDataHome, "HITT-CLI");
+                }
+                
+                var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                return Path.Combine(homeDir, ".local", "share", "HITT-CLI");
+            }
+        }
+
+        /// <summary>
+        /// Ensures the required directories exist and copies default data files if needed
         /// </summary>
         private void EnsureDirectoriesExist()
         {
             Directory.CreateDirectory(_dataDirectory);
             Directory.CreateDirectory(_routinesDirectory);
             Directory.CreateDirectory(_schedulesDirectory);
+            
+            // Copy default data files if user directories are empty
+            CopyDefaultDataFiles();
+        }
+
+        /// <summary>
+        /// Copies default routine and schedule files from the app bundle to user data directory
+        /// </summary>
+        private void CopyDefaultDataFiles()
+        {
+            var appDataDirectory = Path.Combine(AppContext.BaseDirectory, "Data");
+            
+            if (Directory.Exists(appDataDirectory))
+            {
+                // Copy routines if user directory is empty
+                if (!Directory.GetFiles(_routinesDirectory, "*.json").Any())
+                {
+                    CopyFilesFromDirectory(Path.Combine(appDataDirectory, "Routines"), _routinesDirectory);
+                }
+                
+                // Copy schedules if user directory is empty
+                if (!Directory.GetFiles(_schedulesDirectory, "*.json").Any())
+                {
+                    CopyFilesFromDirectory(Path.Combine(appDataDirectory, "Schedules"), _schedulesDirectory);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copies all JSON files from source directory to destination directory
+        /// </summary>
+        private void CopyFilesFromDirectory(string sourceDir, string destDir)
+        {
+            if (!Directory.Exists(sourceDir)) return;
+            
+            try
+            {
+                var jsonFiles = Directory.GetFiles(sourceDir, "*.json");
+                foreach (var sourceFile in jsonFiles)
+                {
+                    var fileName = Path.GetFileName(sourceFile);
+                    var destFile = Path.Combine(destDir, fileName);
+                    
+                    if (!File.Exists(destFile))
+                    {
+                        File.Copy(sourceFile, destFile);
+                    }
+                }
+            }
+            catch
+            {
+                // Silently ignore copy errors - app will still function
+            }
         }
 
         /// <summary>
