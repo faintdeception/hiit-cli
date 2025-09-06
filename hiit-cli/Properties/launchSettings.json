@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "hitt-cli": {
+    "hiit-cli": {
       "commandName": "Project"
     },
     "Container (Dockerfile)": {

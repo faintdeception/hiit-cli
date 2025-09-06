@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace hitt_cli.Models
+namespace hiit_cli.Models
 {
     /// <summary>
     /// Represents a single workout exercise with timing and repetition information

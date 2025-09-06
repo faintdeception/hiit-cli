@@ -1,8 +1,8 @@
 #!/bin/bash
-# HITT CLI Installation Script for Linux/macOS
-# Run this script in the hitt-cli directory
+# HIIT CLI Installation Script for Linux/macOS
+# Run this script in the hiit-cli directory
 
-echo "🏃‍♂️ Installing HITT CLI..."
+echo "🏃‍♂️ Installing HIIT CLI..."
 
 # Check if .NET SDK is installed
 if ! command -v dotnet &> /dev/null; then
@@ -15,7 +15,7 @@ dotnet_version=$(dotnet --version)
 echo "✅ .NET SDK found: $dotnet_version"
 
 # Build the application
-echo "🔨 Building HITT CLI..."
+echo "🔨 Building HIIT CLI..."
 dotnet restore
 if [ $? -ne 0 ]; then
     echo "❌ Failed to restore packages"
@@ -30,13 +30,13 @@ fi
 
 # Uninstall existing version (if any)
 echo "🧹 Removing existing installation..."
-dotnet tool uninstall --global hitt-cli 2>/dev/null
+dotnet tool uninstall --global hiit-cli 2>/dev/null
 
 # Install the new version
-echo "📦 Installing HITT CLI..."
-dotnet tool install --global --add-source ./hitt-cli/bin/Release hitt-cli
+echo "📦 Installing HIIT CLI..."
+dotnet tool install --global --add-source ./hiit-cli/bin/Release hiit-cli
 if [ $? -ne 0 ]; then
-    echo "❌ Failed to install HITT CLI"
+    echo "❌ Failed to install HIIT CLI"
     exit 1
 fi
 
@@ -47,18 +47,18 @@ mkdir -p "$data_dir/Routines"
 mkdir -p "$data_dir/Schedules"
 
 # Copy sample data
-cp -r ./hitt-cli/Data/* "$data_dir/"
+cp -r ./hiit-cli/Data/* "$data_dir/"
 
 echo ""
-echo "🎉 HITT CLI installed successfully!"
+echo "🎉 HIIT CLI installed successfully!"
 echo ""
 echo "📋 Quick Start:"
-echo "  hitt                    - Interactive mode"
-echo "  hitt help               - Show all commands"
-echo "  hitt list               - List available workouts"
-echo "  hitt preview <routine>  - Preview a workout"
-echo "  hitt run <routine>      - Run a workout"
+echo "  hiit                    - Interactive mode"
+echo "  hiit help               - Show all commands"
+echo "  hiit list               - List available workouts"
+echo "  hiit preview <routine>  - Preview a workout"
+echo "  hiit run <routine>      - Run a workout"
 echo ""
 echo "📁 Workout data location: $data_dir"
 echo ""
-echo "💪 Ready to get fit! Try: hitt preview day-one-no-rest-blast"
+echo "💪 Ready to get fit! Try: hiit preview day-one-no-rest-blast"

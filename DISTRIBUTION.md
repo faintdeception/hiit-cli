@@ -1,4 +1,4 @@
-# HITT CLI - Distribution Guide
+# HIIT CLI - Distribution Guide
 
 ## 🚀 Distribution Options
 
@@ -8,18 +8,18 @@
 1. **Share the repository:**
    ```bash
    git clone <your-repo-url>
-   cd hitt-cli/hitt-cli
+   cd hiit-cli/hiit-cli
    dotnet pack
-   dotnet tool install --global --add-source ./bin/Release hitt-cli
+   dotnet tool install --global --add-source ./bin/Release hiit-cli
    ```
 
 2. **Include setup script (Windows):**
    ```powershell
-   # install-hitt.ps1
+   # install-hiit.ps1
    dotnet restore
    dotnet pack --configuration Release
-   dotnet tool install --global --add-source ./bin/Release hitt-cli
-   Write-Host "HITT CLI installed! Run 'hitt' to get started."
+   dotnet tool install --global --add-source ./bin/Release hiit-cli
+   Write-Host "HIIT CLI installed! Run 'hiit' to get started."
    ```
 
 ### **Option 2: Pre-built Package Distribution**
@@ -31,8 +31,8 @@
    ```
 
 2. **Share the .nupkg file:**
-   - Copy `bin/Release/hitt-cli.1.0.0.nupkg`
-   - User installs with: `dotnet tool install --global --add-source <folder> hitt-cli`
+   - Copy `bin/Release/hiit-cli.1.0.0.nupkg`
+   - User installs with: `dotnet tool install --global --add-source <folder> hiit-cli`
 
 ### **Option 3: NuGet.org Publishing (Most Professional)**
 **Best for: Public distribution**
@@ -40,11 +40,11 @@
 1. **Get NuGet API key from nuget.org**
 2. **Publish package:**
    ```bash
-   dotnet nuget push bin/Release/hitt-cli.1.0.0.nupkg --api-key <your-key> --source https://api.nuget.org/v3/index.json
+   dotnet nuget push bin/Release/hiit-cli.1.0.0.nupkg --api-key <your-key> --source https://api.nuget.org/v3/index.json
    ```
 3. **Users install with:**
    ```bash
-   dotnet tool install --global hitt-cli
+   dotnet tool install --global hiit-cli
    ```
 
 ### **Option 4: GitHub Releases (Recommended)**
@@ -83,15 +83,15 @@ dotnet publish -c Release -r linux-x64 --self-contained
 ## 📁 **What to Include in Distribution**
 
 ### **Essential Files:**
-- `hitt-cli.exe` or source code
+- `hiit-cli.exe` or source code
 - `Data/` folder with sample workouts
 - Installation instructions
 - README with usage examples
 
 ### **Sample Distribution Structure:**
 ```
-hitt-cli-release/
-├── hitt-cli.1.0.0.nupkg
+hiit-cli-release/
+├── hiit-cli.1.0.0.nupkg
 ├── install.ps1 (Windows)
 ├── install.sh (Linux/Mac)
 ├── README.md
@@ -110,25 +110,25 @@ hitt-cli-release/
 ### **With .NET SDK installed:**
 ```bash
 # From NuGet (if published)
-dotnet tool install --global hitt-cli
+dotnet tool install --global hiit-cli
 
 # From local package
-dotnet tool install --global --add-source <folder> hitt-cli
+dotnet tool install --global --add-source <folder> hiit-cli
 ```
 
 ### **From source:**
 ```bash
 git clone <repo-url>
-cd hitt-cli/hitt-cli
+cd hiit-cli/hiit-cli
 dotnet pack
-dotnet tool install --global --add-source ./bin/Release hitt-cli
+dotnet tool install --global --add-source ./bin/Release hiit-cli
 ```
 
 ### **Setup data directory:**
 ```bash
 mkdir ~/Data
 cp -r sample-data/* ~/Data/
-hitt list  # Verify installation
+hiit list  # Verify installation
 ```
 
 ## 💡 **Pro Tips**

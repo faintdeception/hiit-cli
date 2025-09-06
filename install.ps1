@@ -1,7 +1,7 @@
-# HITT CLI Installation Script for Windows
-# Run this script in the hitt-cli directory
+# HIIT CLI Installation Script for Windows
+# Run this script in the hiit-cli directory
 
-Write-Host "🏃‍♂️ Installing HITT CLI..." -ForegroundColor Cyan
+Write-Host "🏃‍♂️ Installing HIIT CLI..." -ForegroundColor Cyan
 
 # Check if .NET SDK is installed
 try {
@@ -14,7 +14,7 @@ try {
 }
 
 # Build the application
-Write-Host "🔨 Building HITT CLI..." -ForegroundColor Cyan
+Write-Host "🔨 Building HIIT CLI..." -ForegroundColor Cyan
 dotnet restore
 if ($LASTEXITCODE -ne 0) {
     Write-Host "❌ Failed to restore packages" -ForegroundColor Red
@@ -29,13 +29,13 @@ if ($LASTEXITCODE -ne 0) {
 
 # Uninstall existing version (if any)
 Write-Host "🧹 Removing existing installation..." -ForegroundColor Cyan
-dotnet tool uninstall --global hitt-cli 2>$null
+dotnet tool uninstall --global hiit-cli 2>$null
 
 # Install the new version
-Write-Host "📦 Installing HITT CLI..." -ForegroundColor Cyan
-dotnet tool install --global --add-source .\hitt-cli\bin\Release hitt-cli
+Write-Host "📦 Installing HIIT CLI..." -ForegroundColor Cyan
+dotnet tool install --global --add-source .\hiit-cli\bin\Release hiit-cli
 if ($LASTEXITCODE -ne 0) {
-    Write-Host "❌ Failed to install HITT CLI" -ForegroundColor Red
+    Write-Host "❌ Failed to install HIIT CLI" -ForegroundColor Red
     exit 1
 }
 
@@ -49,18 +49,18 @@ if (!(Test-Path $dataDir)) {
 }
 
 # Copy sample data
-Copy-Item -Path ".\hitt-cli\Data\*" -Destination $dataDir -Recurse -Force
+Copy-Item -Path ".\hiit-cli\Data\*" -Destination $dataDir -Recurse -Force
 
 Write-Host ""
-Write-Host "🎉 HITT CLI installed successfully!" -ForegroundColor Green
+Write-Host "🎉 HIIT CLI installed successfully!" -ForegroundColor Green
 Write-Host ""
 Write-Host "📋 Quick Start:" -ForegroundColor Yellow
-Write-Host "  hitt                    - Interactive mode" -ForegroundColor White
-Write-Host "  hitt help               - Show all commands" -ForegroundColor White
-Write-Host "  hitt list               - List available workouts" -ForegroundColor White
-Write-Host "  hitt preview <routine>  - Preview a workout" -ForegroundColor White
-Write-Host "  hitt run <routine>      - Run a workout" -ForegroundColor White
+Write-Host "  hiit                    - Interactive mode" -ForegroundColor White
+Write-Host "  hiit help               - Show all commands" -ForegroundColor White
+Write-Host "  hiit list               - List available workouts" -ForegroundColor White
+Write-Host "  hiit preview <routine>  - Preview a workout" -ForegroundColor White
+Write-Host "  hiit run <routine>      - Run a workout" -ForegroundColor White
 Write-Host ""
 Write-Host "📁 Workout data location: $dataDir" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "💪 Ready to get fit! Try: hitt preview day-one-no-rest-blast" -ForegroundColor Green
+Write-Host "💪 Ready to get fit! Try: hiit preview day-one-no-rest-blast" -ForegroundColor Green

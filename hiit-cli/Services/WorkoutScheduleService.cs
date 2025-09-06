@@ -1,6 +1,6 @@
-using hitt_cli.Models;
+using hiit_cli.Models;
 
-namespace hitt_cli.Services
+namespace hiit_cli.Services
 {
     /// <summary>
     /// Service for managing workout scheduling logic

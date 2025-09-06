@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace hitt_cli.Services
+namespace hiit_cli.Services
 {
     /// <summary>
     /// Service for handling display symbols and emoji compatibility
@@ -22,7 +22,7 @@ namespace hitt_cli.Services
                     return _supportsEmojis.Value;
 
                 // Check environment variable first
-                var envOverride = Environment.GetEnvironmentVariable("HITT_CLI_EMOJIS");
+                var envOverride = Environment.GetEnvironmentVariable("HIIT_CLI_EMOJIS");
                 if (!string.IsNullOrEmpty(envOverride))
                 {
                     _supportsEmojis = envOverride.ToLowerInvariant() == "true";
@@ -70,7 +70,7 @@ namespace hitt_cli.Services
                     return _audioEnabled.Value;
 
                 // Check environment variable for audio preference
-                var envAudio = Environment.GetEnvironmentVariable("HITT_CLI_AUDIO");
+                var envAudio = Environment.GetEnvironmentVariable("HIIT_CLI_AUDIO");
                 if (!string.IsNullOrEmpty(envAudio))
                 {
                     _audioEnabled = envAudio.ToLowerInvariant() == "true";
@@ -102,7 +102,7 @@ namespace hitt_cli.Services
                     return _audioDebugEnabled.Value;
 
                 // Check environment variable for audio debug preference
-                var envAudioDebug = Environment.GetEnvironmentVariable("HITT_CLI_AUDIO_DEBUG");
+                var envAudioDebug = Environment.GetEnvironmentVariable("HIIT_CLI_AUDIO_DEBUG");
                 if (!string.IsNullOrEmpty(envAudioDebug))
                 {
                     _audioDebugEnabled = envAudioDebug.ToLowerInvariant() == "true";

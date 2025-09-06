@@ -1,7 +1,7 @@
-using hitt_cli.Models;
+using hiit_cli.Models;
 using Spectre.Console;
 
-namespace hitt_cli.Services
+namespace hiit_cli.Services
 {
     /// <summary>
     /// Service for executing workout routines with timing and progress tracking
@@ -625,7 +625,7 @@ namespace hitt_cli.Services
             {
                 Path.Combine(baseDirectory, "assets", "audio", "ok-2.wav"),
                 Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? "", "assets", "audio", "ok-2.wav"),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".dotnet", "tools", ".store", "hitt-cli", "1.0.0", "hitt-cli", "1.0.0", "tools", "net8.0", "any", "assets", "audio", "ok-2.wav")
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".dotnet", "tools", ".store", "hiit-cli", "1.0.0", "hiit-cli", "1.0.0", "tools", "net8.0", "any", "assets", "audio", "ok-2.wav")
             };
             
             string? validPath = null;

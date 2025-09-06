@@ -1,7 +1,7 @@
 using System.Text.Json;
-using hitt_cli.Models;
+using hiit_cli.Models;
 
-namespace hitt_cli.Services
+namespace hiit_cli.Services
 {
     /// <summary>
     /// Service for loading and managing workout data from JSON files
@@ -50,27 +50,27 @@ namespace hitt_cli.Services
         {
             if (OperatingSystem.IsWindows())
             {
-                // Windows: %LOCALAPPDATA%\HITT-CLI
+                // Windows: %LOCALAPPDATA%\HIIT-CLI
                 var localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                return Path.Combine(localAppData, "HITT-CLI");
+                return Path.Combine(localAppData, "HIIT-CLI");
             }
             else if (OperatingSystem.IsMacOS())
             {
-                // macOS: ~/Library/Application Support/HITT-CLI
+                // macOS: ~/Library/Application Support/HIIT-CLI
                 var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                return Path.Combine(homeDir, "Library", "Application Support", "HITT-CLI");
+                return Path.Combine(homeDir, "Library", "Application Support", "HIIT-CLI");
             }
             else
             {
-                // Linux/Unix: ~/.local/share/HITT-CLI or $XDG_DATA_HOME/HITT-CLI
+                // Linux/Unix: ~/.local/share/HIIT-CLI or $XDG_DATA_HOME/HIIT-CLI
                 var xdgDataHome = Environment.GetEnvironmentVariable("XDG_DATA_HOME");
                 if (!string.IsNullOrEmpty(xdgDataHome))
                 {
-                    return Path.Combine(xdgDataHome, "HITT-CLI");
+                    return Path.Combine(xdgDataHome, "HIIT-CLI");
                 }
                 
                 var homeDir = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                return Path.Combine(homeDir, ".local", "share", "HITT-CLI");
+                return Path.Combine(homeDir, ".local", "share", "HIIT-CLI");
             }
         }
 

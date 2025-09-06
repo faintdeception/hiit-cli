@@ -1,7 +1,7 @@
-﻿using hitt_cli.Services;
+﻿using hiit_cli.Services;
 using Spectre.Console;
 
-namespace hitt_cli
+namespace hiit_cli
 {
     internal class Program
     {
@@ -76,7 +76,7 @@ namespace hitt_cli
         static void DisplayWelcomeHeader()
         {
             AnsiConsole.Write(
-                new FigletText("HITT CLI")
+                new FigletText("HIIT CLI")
                     .LeftJustified()
                     .Color(Color.Red));
 
@@ -367,19 +367,19 @@ namespace hitt_cli
 
         static void ShowHelp()
         {
-            AnsiConsole.MarkupLine("[bold yellow]HITT CLI - Usage:[/]");
+            AnsiConsole.MarkupLine("[bold yellow]HIIT CLI - Usage:[/]");
             AnsiConsole.WriteLine();
             AnsiConsole.MarkupLine("[bold]Commands:[/]");
-            AnsiConsole.MarkupLine("  [green]hitt[/]                    - Interactive mode");
-            AnsiConsole.MarkupLine("  [green]hitt now[/]                - Start current scheduled workout");
-            AnsiConsole.MarkupLine("  [green]hitt today[/]              - View today's workout schedule");
-            AnsiConsole.MarkupLine("  [green]hitt next[/]               - Show next scheduled workout");
-            AnsiConsole.MarkupLine("  [green]hitt list[/]               - List available schedules and routines");
-            AnsiConsole.MarkupLine("  [green]hitt run <routine>[/]      - Run a specific routine");
-            AnsiConsole.MarkupLine("  [green]hitt preview <routine>[/]  - Preview a routine without running");
-            AnsiConsole.MarkupLine("  [green]hitt debug-audio[/]        - Test audio playback and paths");
-            AnsiConsole.MarkupLine("  [green]hitt data[/]               - Show data directory location and status");
-            AnsiConsole.MarkupLine("  [green]hitt help[/]               - Show this help");
+            AnsiConsole.MarkupLine("  [green]hiit[/]                    - Interactive mode");
+            AnsiConsole.MarkupLine("  [green]hiit now[/]                - Start current scheduled workout");
+            AnsiConsole.MarkupLine("  [green]hiit today[/]              - View today's workout schedule");
+            AnsiConsole.MarkupLine("  [green]hiit next[/]               - Show next scheduled workout");
+            AnsiConsole.MarkupLine("  [green]hiit list[/]               - List available schedules and routines");
+            AnsiConsole.MarkupLine("  [green]hiit run <routine>[/]      - Run a specific routine");
+            AnsiConsole.MarkupLine("  [green]hiit preview <routine>[/]  - Preview a routine without running");
+            AnsiConsole.MarkupLine("  [green]hiit debug-audio[/]        - Test audio playback and paths");
+            AnsiConsole.MarkupLine("  [green]hiit data[/]               - Show data directory location and status");
+            AnsiConsole.MarkupLine("  [green]hiit help[/]               - Show this help");
             AnsiConsole.WriteLine();
             AnsiConsole.MarkupLine("[bold]Options:[/]");
             AnsiConsole.MarkupLine("  [cyan]--emoji[/]                  - Force emoji display (default on Unix)");
@@ -389,15 +389,15 @@ namespace hitt_cli
             AnsiConsole.MarkupLine("  [cyan]--audio-debug[/]            - Show audio method being used for playback");
             AnsiConsole.WriteLine();
             AnsiConsole.MarkupLine("[dim]Environment variables:[/]");
-            AnsiConsole.MarkupLine("[dim]  HITT_CLI_EMOJIS=true/false      - Control emoji display[/]");
-            AnsiConsole.MarkupLine("[dim]  HITT_CLI_AUDIO=true/false       - Control audio cues[/]");
-            AnsiConsole.MarkupLine("[dim]  HITT_CLI_AUDIO_DEBUG=true/false - Show audio debug info[/]");
+            AnsiConsole.MarkupLine("[dim]  HIIT_CLI_EMOJIS=true/false      - Control emoji display[/]");
+            AnsiConsole.MarkupLine("[dim]  HIIT_CLI_AUDIO=true/false       - Control audio cues[/]");
+            AnsiConsole.MarkupLine("[dim]  HIIT_CLI_AUDIO_DEBUG=true/false - Show audio debug info[/]");
             AnsiConsole.MarkupLine("[dim]You can add custom workout routines and schedules to your data directory.[/]");
         }
 
         static void ShowDataDirectory()
         {
-            AnsiConsole.MarkupLine("[bold yellow]HITT CLI - Data Directory Information:[/]");
+            AnsiConsole.MarkupLine("[bold yellow]HIIT CLI - Data Directory Information:[/]");
             AnsiConsole.WriteLine();
             
             AnsiConsole.MarkupLine($"[bold]Data Directory:[/] [green]{_dataService.DataDirectory}[/]");

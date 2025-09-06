@@ -1,8 +1,8 @@
-# 🏃🏾 HITT CLI - High Intensity Interval Training
+# 🏃🏾 HIIT CLI - High Intensity Interval Training
 
 A powerful command-line tool for guided HIIT workouts with interactive timers, progress tracking, and customizable routines.
 
-![HITT CLI Demo](https://img.shields.io/badge/Platform-.NET%208-512BD4) ![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen) ![License](https://img.shields.io/badge/License-MIT-blue)
+![HIIT CLI Demo](https://img.shields.io/badge/Platform-.NET%208-512BD4) ![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen) ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ## ✨ Features
 
@@ -13,7 +13,7 @@ A powerful command-line tool for guided HIIT workouts with interactive timers, p
 - 🎯 **Multi-Rep Routines** - Complete workout rounds with rest between reps
 - 📱 **Rich Terminal UI** - Beautiful console interface with Spectre Console
 - 📁 **JSON-Based** - Easy-to-edit workout and schedule files
-- 🚀 **Global CLI Tool** - Run from anywhere with `hitt` command
+- 🚀 **Global CLI Tool** - Run from anywhere with `hiit` command
 
 ## 🚀 Quick Start
 
@@ -33,43 +33,43 @@ chmod +x install.sh
 **Option 3: Manual installation**
 ```bash
 dotnet pack --configuration Release
-dotnet tool install --global --add-source ./hitt-cli/bin/Release hitt-cli
+dotnet tool install --global --add-source ./hiit-cli/bin/Release hiit-cli
 ```
 
 ### First Run
 
 ```bash
 # Start interactive mode
-hitt
+hiit
 
 # List available workouts
-hitt list
+hiit list
 
 # Preview a workout
-hitt preview day-one-no-rest-blast
+hiit preview day-one-no-rest-blast
 
 # Run a specific workout
-hitt run morning-hiit-blast
+hiit run morning-hiit-blast
 
 # Check today's schedule
-hitt today
+hiit today
 
 # Start current scheduled workout
-hitt now
+hiit now
 ```
 
 ## 📋 Commands
 
 | Command | Description |
 |---------|-------------|
-| `hitt` | Interactive mode with menu |
-| `hitt now` | Start current scheduled workout |
-| `hitt today` | View today's workout schedule |
-| `hitt next` | Show next scheduled workout |
-| `hitt list` | List available schedules and routines |
-| `hitt run <routine>` | Run a specific routine |
-| `hitt preview <routine>` | Preview a routine without running |
-| `hitt help` | Show help information |
+| `hiit` | Interactive mode with menu |
+| `hiit now` | Start current scheduled workout |
+| `hiit today` | View today's workout schedule |
+| `hiit next` | Show next scheduled workout |
+| `hiit list` | List available schedules and routines |
+| `hiit run <routine>` | Run a specific routine |
+| `hiit preview <routine>` | Preview a routine without running |
+| `hiit help` | Show help information |
 
 ## 📁 Workout Structure
 
@@ -139,7 +139,7 @@ hitt now
 
 1. Create JSON file in `Data/Routines/`
 2. Follow the routine structure
-3. Run `hitt list` to verify
+3. Run `- Use `hiit list` to verify` to verify
 
 ### Creating Schedules
 
@@ -171,7 +171,7 @@ The app provides a complete guided workout experience:
 
 ## 💡 Pro Tips
 
-- Use `hitt preview` before running new workouts
+- Use `hiit preview` before running new workouts
 - Customize rest periods for your fitness level
 - Create multiple schedules for different goals
 - Use tags to categorize workouts
@@ -191,13 +191,13 @@ MIT License - Feel free to modify and distribute
 Ready to transform your fitness routine? 
 
 ```bash
-hitt preview day-one-no-rest-blast
+hiit preview day-one-no-rest-blast
 ```
 
 Then when you're ready:
 
 ```bash
-hitt run day-one-no-rest-blast
+hiit run day-one-no-rest-blast
 ```
 
 **Let's get fit! 🔥**
