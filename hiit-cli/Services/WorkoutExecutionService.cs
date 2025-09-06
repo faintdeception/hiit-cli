@@ -52,7 +52,7 @@ namespace hiit_cli.Services
                         break;
 
                     var workout = routine.Workouts[workoutIndex - 1];
-                    await ExecuteWorkoutAsync(workout, workoutIndex, totalWorkouts, currentRep, routine.Reps, cancellationToken);
+                    await ExecuteWorkoutAsync(workout, workoutIndex, totalWorkouts, currentRep, routine.Reps, routine, cancellationToken);
                     
                     // Handle rest between exercises (not after the last exercise in the last rep)
                     var isLastExerciseInLastRep = (workoutIndex == totalWorkouts && currentRep == routine.Reps);
@@ -105,7 +105,7 @@ namespace hiit_cli.Services
         /// <summary>
         /// Executes a single workout with sets and rest periods
         /// </summary>
-        private async Task ExecuteWorkoutAsync(Workout workout, int workoutNumber, int totalWorkouts, int currentRep, int totalReps, CancellationToken cancellationToken)
+        private async Task ExecuteWorkoutAsync(Workout workout, int workoutNumber, int totalWorkouts, int currentRep, int totalReps, WorkoutRoutine routine, CancellationToken cancellationToken)
         {
             var isNoRestWorkout = workout.Rest == 0;
             
@@ -186,16 +186,53 @@ namespace hiit_cli.Services
             // Enhanced completion messaging
             if (!cancellationToken.IsCancellationRequested)
             {
+                var nextExerciseName = GetNextExerciseName(routine, workoutNumber, totalWorkouts, currentRep, totalReps);
+                
                 if (isNoRestWorkout && (workoutNumber < totalWorkouts || currentRep < totalReps))
                 {
-                    AnsiConsole.MarkupLine($"[bold cyan]{DisplayService.Fire} Exercise {workoutNumber} crushed! Moving to next...[/]");
+                    if (!string.IsNullOrEmpty(nextExerciseName))
+                    {
+                        AnsiConsole.MarkupLine($"[bold cyan]{DisplayService.Fire} Exercise {workoutNumber} crushed! Moving to [yellow]{nextExerciseName}[/]...[/]");
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine($"[bold cyan]{DisplayService.Fire} Exercise {workoutNumber} crushed! Moving to next...[/]");
+                    }
                     await Task.Delay(1500, cancellationToken);
                 }
                 else if (workoutNumber < totalWorkouts || currentRep < totalReps)
                 {
-                    AnsiConsole.MarkupLine($"[bold cyan]✅ Exercise {workoutNumber} complete! Next exercise coming up...[/]");
+                    if (!string.IsNullOrEmpty(nextExerciseName))
+                    {
+                        AnsiConsole.MarkupLine($"[bold cyan]✅ Exercise {workoutNumber} complete! Next exercise: [yellow]{nextExerciseName}[/][/]");
+                    }
+                    else
+                    {
+                        AnsiConsole.MarkupLine($"[bold cyan]✅ Exercise {workoutNumber} complete! Next exercise coming up...[/]");
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the name of the next exercise in the routine
+        /// </summary>
+        private string? GetNextExerciseName(WorkoutRoutine routine, int currentWorkoutNumber, int totalWorkouts, int currentRep, int totalReps)
+        {
+            // If we're in the middle of the current rep, return the next exercise in this rep
+            if (currentWorkoutNumber < totalWorkouts)
+            {
+                return routine.Workouts[currentWorkoutNumber].Name; // currentWorkoutNumber is 1-based, array is 0-based, so this gets the next exercise
+            }
+            
+            // If we're at the end of the current rep but there are more reps, return the first exercise of the next rep
+            if (currentRep < totalReps)
+            {
+                return routine.Workouts[0].Name; // First exercise of the next rep
+            }
+            
+            // No more exercises
+            return null;
         }
 
         /// <summary>
